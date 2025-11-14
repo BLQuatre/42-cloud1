@@ -1,0 +1,44 @@
+# - name: Update db servers
+#   hosts: databases
+#   become: true
+
+#   tasks:
+#   - name: Ensure postgresql is at the latest version
+#     ansible.builtin.apk:
+#       name: postgresql
+#       state: latest
+#       update_cache: yes
+
+#   - name: Verify postgresql is installed
+#     ansible.builtin.command: postgres --version
+#     register: postgres_version
+#     changed_when: false
+
+#   - name: Display PostgreSQL version
+#     ansible.builtin.debug:
+#       msg: "PostgreSQL version: {{ postgres_v ersion.stdout }}"
+
+
+# # - name: My first play
+# #   hosts: docker
+# #   tasks:
+# #    - name: Ping my hosts
+# #      ansible.builtin.ping:
+
+# #    - name: Print message
+# #      ansible.builtin.debug:
+# #        msg: Hello world
+# # - name: Update web servers
+# #   hosts: webservers
+# #   remote_user: root
+
+# #   tasks:
+# #   - name: Ensure apache is at the latest version
+# #     ansible.builtin.yum:
+# #       name: httpd
+# #       state: latest
+
+# #   - name: Write the apache config file
+# #     ansible.builtin.template:
+# #       src: /srv/httpd.j2
+# #       dest: /etc/httpd.conf
