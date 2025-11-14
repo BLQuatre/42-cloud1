@@ -1,19 +1,12 @@
-FROM alpine:3.22
+FROM ubuntu:20.04
 
-RUN apk update && apk add --no-cache openssh sudo python3
+RUN apt update && apt install openssh-server sudo python3 -y
 
-RUN adduser -D -h /home/alpine -s /bin/sh node \
-	&& echo "node:node1234" | chpasswd \
-	&& adduser node wheel \
-	&& echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 node \
+	&& echo 'node:node1234' | chpasswd
 
-RUN ssh-keygen -A
-
-RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config \
-	&& sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config \
-	&& echo "PermitRootLogin no" >> /etc/ssh/sshd_config \
-	&& echo "AllowUsers node" >> /etc/ssh/sshd_config
+RUN service ssh start
 
 EXPOSE 22
 
-CMD ["/usr/sbin/sshd", "-D"]
+CMD ["/usr/sbin/sshd","-D"]

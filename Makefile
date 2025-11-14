@@ -1,5 +1,14 @@
-build_ssh:
-	docker build -t alpine-ssh local
+run:
+	docker run -d -p $(SSH_PORT):22 ubuntu-srv
 
-run_ssh:
-	docker run -d -p $(SSH_PORT):22 alpine-ssh
+build:
+	docker build -t ubuntu-srv -f local/Dockerfile .
+
+ping:
+	ansible servers -m ping -i inventory.ini
+
+inventory:
+	ansible-inventory -i inventory.ini --list
+
+playbook:
+	ansible-playbook -i inventory.ini playbook.yml
