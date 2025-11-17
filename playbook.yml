@@ -1,6 +1,7 @@
 - hosts: servers
   roles:
-    - test
-    # - mariadb
-    # - wordpress
-    # - nginx
+    - docker
+    - mariadb
+    - wordpress
+    - phpmyadmin
+    - caddy
