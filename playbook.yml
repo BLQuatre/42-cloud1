@@ -9,3 +9,9 @@
     - wordpress
     - phpmyadmin
     - caddy
+
+  post_tasks:
+    - name: Build and start Docker containers
+      become: true
+      community.docker.docker_compose_v2:
+        project_src: "{{ app_path }}"
