@@ -50,6 +50,6 @@ volumes:
   #     device: /home/cauvray/data/mariadb
 
 networks:
-  inception:
+  cloud1:
     name: cloud1
     driver: bridge
