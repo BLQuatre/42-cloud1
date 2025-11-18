@@ -1,18 +1,6 @@
 ---
-- name: Install rsync (dependency)
+- name: copy database worktree
   become: true
-  apt:
-    name: rsync
-
-- name: Create mariadb directory
-  file:
-    path: /opt/cloud-1/db
-    state: directory
-    mode: '0755'
-
-- name: Sync database worktree
-  synchronize:
-    src: ../files/
-    dest: /opt/wordpress/db/
-    recursive: true
-    delete: true
+  copy:
+    src: .
+    dest: /opt/cloud-1/mariadb
