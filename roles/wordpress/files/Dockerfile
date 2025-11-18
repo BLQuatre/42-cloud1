@@ -12,17 +12,17 @@ WORKDIR /var/www
 RUN curl -o /usr/local/bin/wp -L https://github.com/wp-cli/wp-cli/releases/download/v2.11.0/wp-cli-2.11.0.phar \
 	&& chmod +x /usr/local/bin/wp
 
-COPY memory.ini /etc/php84/conf.d/memory.ini
+COPY config/memory.ini /etc/php84/conf.d/memory.ini
 
 RUN wp core download --path=/var/www/wordpress --allow-root \
 	&& chown -R www-data:www-data /var/www/wordpress
 
-COPY www.conf /etc/php84/php-fpm.d/www.conf
+COPY config/www.conf /etc/php84/php-fpm.d/www.conf
 
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+COPY tools/entrypoint.sh /opt/entrypoint.sh
+RUN chmod +x /opt/entrypoint.sh
 
 WORKDIR /var/www/wordpress
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+ENTRYPOINT ["/opt/entrypoint.sh"]
 CMD ["/usr/sbin/php-fpm84", "-F"]
