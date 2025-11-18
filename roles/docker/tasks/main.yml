@@ -69,10 +69,6 @@
     autoclean: true
     autoremove: true
 
-- name: Docker installation completed
-  debug:
-    msg: "Docker and Docker Compose have been successfully installed and configured."
-
 - name: Copy docker-compose.yml file
   become: true
   copy:
