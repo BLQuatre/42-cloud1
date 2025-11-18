@@ -3,6 +3,9 @@
   vars:
     app_path: "/opt/cloud1"
 
+  vars_files:
+    - vault.yml
+
   roles:
     - docker
     - mariadb

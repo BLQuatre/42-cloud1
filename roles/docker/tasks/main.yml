@@ -76,3 +76,9 @@
     dest: "{{ app_path }}/"
     owner: "{{ ansible_user }}"
     mode: "0644"
+
+- name: Deploy .env with secrets
+  template:
+    src: ".env.j2"
+    dest: "{{ app_path }}/.env"
+    mode: '0600'
