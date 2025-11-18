@@ -3,4 +3,8 @@
   become: true
   copy:
     src: .
-    dest: /opt/cloud-1/mariadb
+    dest: "{{ app_path }}/mariadb/"
+
+- name: "[INFO]"
+  debug: 
+    msg: "Worktree database worktree : Success"
