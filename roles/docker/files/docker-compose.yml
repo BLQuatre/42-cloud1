@@ -1,0 +1,55 @@
+services:
+  caddy:
+    container_name: caddy
+    # volumes:
+    #   - wordpress:/var/www/wordpress
+    networks:
+      - cloud1
+    depends_on:
+      - wordpress
+    build:
+      context: caddy
+    ports:
+      - "443:443"
+    restart: always
+  mariadb:
+    container_name: mariadb
+    networks:
+      - cloud1
+    build:
+      context: mariadb
+    # env_file: .env
+    volumes:
+      - mariadb:/var/lib/mysql
+    restart: always
+  wordpress:
+    container_name: wordpress
+    networks:
+      - cloud1
+    depends_on:
+      - mariadb
+    build:
+      context: wordpress
+    # env_file: .env
+    volumes:
+      - wordpress:/var/www/wordpress
+    restart: always
+
+volumes:
+  wordpress:
+    driver: local
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device: /home/cauvray/data/wordpress
+  mariadb:
+    driver: local
+  #   driver_opts:
+  #     type: none
+  #     o: bind
+  #     device: /home/cauvray/data/mariadb
+
+networks:
+  inception:
+    name: cloud1
+    driver: bridge

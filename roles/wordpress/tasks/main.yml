@@ -1,0 +1,7 @@
+- name: Copy Dockerfile and configuration files for WordPress
+  become: true
+  copy:
+    src: "."
+    dest: "{{ app_path }}/wordpress/"
+    owner: "{{ ansible_user }}"
+    mode: "0644"

@@ -72,3 +72,11 @@
 - name: Docker installation completed
   debug:
     msg: "Docker and Docker Compose have been successfully installed and configured."
+
+- name: Copy docker-compose.yml file
+  become: true
+  copy:
+    src: "."
+    dest: "{{ app_path }}/"
+    owner: "{{ ansible_user }}"
+    mode: "0644"
