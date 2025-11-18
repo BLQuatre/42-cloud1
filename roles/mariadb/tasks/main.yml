@@ -1,10 +1,7 @@
----
-- name: copy database worktree
+- name: Copy Dockerfile and configuration files for MariaDB
   become: true
   copy:
-    src: .
+    src: "."
     dest: "{{ app_path }}/mariadb/"
-
-- name: "[INFO]"
-  debug: 
-    msg: "Worktree database worktree : Success"
+    owner: "{{ ansible_user }}"
+    mode: "0644"
