@@ -1,16 +1,20 @@
 services:
   caddy:
     container_name: caddy
-    # volumes:
-    #   - wordpress:/var/www/wordpress
+    volumes:
+      - wordpress:/var/www/wordpress
+      - caddy_data:/data
+      - caddy_config:/config
     networks:
       - cloud1
     depends_on:
       - wordpress
     build:
       context: caddy
+    env_file: .env
     ports:
       - "443:443"
+      - "80:80"
     restart: always
   mariadb:
     container_name: mariadb
@@ -36,10 +40,10 @@ services:
     restart: always
 
 volumes:
+  caddy_data:
+  caddy_config:
   wordpress:
-    driver: local
   mariadb:
-    driver: local
 
 networks:
   cloud1:

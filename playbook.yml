@@ -18,3 +18,21 @@
       become: true
       community.docker.docker_compose_v2:
         project_src: "{{ app_path }}"
+        build: always
+
+    - name: Ensure Docker containers are running
+      become: true
+      community.docker.docker_container_info:
+        name: "{{ item }}"
+      loop:
+        - mariadb
+        - wordpress
+        # - phpmyadmin
+        - caddy
+      register: container_info
+
+    - name: Debug container statuses
+      debug:
+        msg: "Container {{ item.item }} is {{ item.container.State.Status }}"
+      loop: "{{ container_info.results }}"
+      when: item.container is defined

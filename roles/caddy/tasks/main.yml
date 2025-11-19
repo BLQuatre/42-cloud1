@@ -1,0 +1,7 @@
+- name: Copy Dockerfile and configuration files for Caddy
+  become: true
+  copy:
+    src: "."
+    dest: "{{ app_path }}/caddy/"
+    owner: "{{ ansible_user }}"
+    mode: "0644"
