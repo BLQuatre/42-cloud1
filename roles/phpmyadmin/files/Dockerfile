@@ -11,7 +11,5 @@ RUN chmod +x /usr/local/bin/wait-for-db.sh
 
 USER www-data
 
-EXPOSE 9000
-
 ENTRYPOINT ["/usr/local/bin/wait-for-db.sh"]
 CMD ["php-fpm"]
