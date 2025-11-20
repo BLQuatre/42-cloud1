@@ -24,5 +24,7 @@ RUN chmod +x /opt/entrypoint.sh
 
 WORKDIR /var/www/wordpress
 
+RUN mkdir -p /var/run/php
+
 ENTRYPOINT ["/opt/entrypoint.sh"]
 CMD ["/usr/sbin/php-fpm84", "-F"]

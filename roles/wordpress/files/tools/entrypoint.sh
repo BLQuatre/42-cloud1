@@ -7,6 +7,7 @@ COUNTER=0
 
 # Ensure required environment variables
 : "${DOMAIN_NAME:?Need to set DOMAIN_NAME}"
+: "${WP_SQL_HOST:?Need to set WP_SQL_HOST}"
 : "${WP_SQL_DATABASE:?Need to set WP_SQL_DATABASE}"
 : "${WP_SQL_USER:?Need to set WP_SQL_USER}"
 : "${WP_SQL_PASSWORD:?Need to set WP_SQL_PASSWORD}"
@@ -15,14 +16,16 @@ COUNTER=0
 : "${WP_ADMIN_PASSWORD:?Need to set WP_ADMIN_PASSWORD}"
 
 echo "Waiting for MariaDB..."
-until mariadb -h mariadb -u "$WP_SQL_USER" -p"$WP_SQL_PASSWORD" -e "SELECT 1" &>/dev/null; do
+until mariadb -h "$WP_SQL_HOST" -u "$WP_SQL_USER" -p"$WP_SQL_PASSWORD" -e "SELECT 1" &>/dev/null; do
 	sleep 2
+	echo "Still waiting for MariaDB..."
 	COUNTER=$((COUNTER+2))
 	if [ "$COUNTER" -ge "$TIMEOUT" ]; then
 		echo "MariaDB did not respond within $TIMEOUT seconds."
 		exit 1
 	fi
 done
+echo "MariaDB is up!"
 
 echo "Configuring WordPress..."
 if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
@@ -33,6 +36,8 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 		--dbpass="$WP_SQL_PASSWORD" \
 		--dbhost=mariadb \
 		--locale=fr_FR
+else
+	echo "wp-config.php already exists."
 fi
 
 if ! wp core is-installed --allow-root; then
@@ -44,8 +49,10 @@ if ! wp core is-installed --allow-root; then
 		--admin_email="$WP_ADMIN_EMAIL" \
 		--skip-email \
 		--allow-root
+else
+	echo "WordPress is already installed."
 fi
 
 wp theme install "$THEME" --activate --allow-root || echo "$THEME already installed and active"
 
-mkdir -p /run/php
+exec "$@"
