@@ -40,6 +40,9 @@ else
 	echo "wp-config.php already exists."
 fi
 
+chown -R www-data:www-data /var/www/wordpress
+chmod 640 /var/www/wordpress/wp-config.php
+
 if ! wp core is-installed --allow-root; then
 	wp core install \
 		--url="$DOMAIN_NAME" \
