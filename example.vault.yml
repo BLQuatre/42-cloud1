@@ -1,6 +1,7 @@
 DOMAIN_NAME: "localhost"
 
 WP_SQL_HOST: "localhost"
+WP_SQL_PORT: "3306"
 WP_SQL_DATABASE: "wordpress"
 WP_SQL_USER: "wordpress_user"
 WP_SQL_PASSWORD: "wordpress_password"

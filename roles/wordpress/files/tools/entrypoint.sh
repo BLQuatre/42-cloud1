@@ -1,13 +1,12 @@
 #!/bin/sh
 set -e
 
-# Default timeout: 60 seconds
 TIMEOUT=${DB_TIMEOUT:-60}
 COUNTER=0
 
-# Ensure required environment variables
 : "${DOMAIN_NAME:?Need to set DOMAIN_NAME}"
 : "${WP_SQL_HOST:?Need to set WP_SQL_HOST}"
+: "${WP_SQL_PORT:?Need to set WP_SQL_PORT}"
 : "${WP_SQL_DATABASE:?Need to set WP_SQL_DATABASE}"
 : "${WP_SQL_USER:?Need to set WP_SQL_USER}"
 : "${WP_SQL_PASSWORD:?Need to set WP_SQL_PASSWORD}"
@@ -16,7 +15,7 @@ COUNTER=0
 : "${WP_ADMIN_PASSWORD:?Need to set WP_ADMIN_PASSWORD}"
 
 echo "Waiting for MariaDB..."
-until mariadb -h "$WP_SQL_HOST" -u "$WP_SQL_USER" -p"$WP_SQL_PASSWORD" -e "SELECT 1" &>/dev/null; do
+until mariadb-admin ping -h "$WP_SQL_HOST" -P "$WP_SQL_PORT" -u "$WP_SQL_USER" -p"$WP_SQL_PASSWORD" --silent; do
 	sleep 2
 	echo "Still waiting for MariaDB..."
 	COUNTER=$((COUNTER+2))
@@ -25,7 +24,6 @@ until mariadb -h "$WP_SQL_HOST" -u "$WP_SQL_USER" -p"$WP_SQL_PASSWORD" -e "SELEC
 		exit 1
 	fi
 done
-echo "MariaDB is up!"
 
 echo "Configuring WordPress..."
 if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
