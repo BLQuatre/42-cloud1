@@ -5,8 +5,6 @@ set -e
 : "${WP_SQL_DATABASE:?Need to set WP_SQL_DATABASE}"
 : "${WP_SQL_USER:?Need to set WP_SQL_USER}"
 : "${WP_SQL_PASSWORD:?Need to set WP_SQL_PASSWORD}"
-: "${PMA_SQL_USER:?Need to set PMA_SQL_USER}"
-: "${PMA_SQL_PASSWORD:?Need to set PMA_SQL_PASSWORD}"
 
 mariadb -u root -p${MARIADB_ROOT_PASSWORD} <<EOSQL
 	CREATE DATABASE IF NOT EXISTS \`${WP_SQL_DATABASE}\`;

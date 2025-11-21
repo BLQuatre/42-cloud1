@@ -16,3 +16,4 @@ CF_API_TOKEN: "your_cloudflare_api_token"
 
 PMA_HOST: "localhost"
 PMA_PORT: "3306"
+PMA_ABSOLUTE_URI: "/pma" # Remove the last slash if present

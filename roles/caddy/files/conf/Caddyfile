@@ -4,11 +4,11 @@
 	file_server
 	encode gzip
 
-	handle /pma {
-		redir /pma/ 308
+	handle {$PMA_ABSOLUTE_URI} {
+		redir {$PMA_ABSOLUTE_URI}/ 308
 	}
 
-	handle_path /pma* {
+	handle_path {$PMA_ABSOLUTE_URI}* {
 		reverse_proxy phpmyadmin:80
 	}
 
