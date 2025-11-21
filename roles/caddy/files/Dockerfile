@@ -1,6 +1,8 @@
 FROM caddy:2.10.2-builder-alpine AS builder
 
-COPY conf/Caddyfile /etc/caddy/Caddyfile
+ENV CGO_ENABLED=1
+
+RUN apk add --no-cache gcc g++ libc-dev
 
 RUN xcaddy build \
 	--with github.com/caddy-dns/cloudflare
