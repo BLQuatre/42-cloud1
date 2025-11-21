@@ -1,0 +1,7 @@
+- name: Copy Dockerfile and script for PhpMyAdmin
+  become: true
+  copy:
+    src: "."
+    dest: "{{ app_path }}/phpmyadmin/"
+    owner: "{{ ansible_user }}"
+    mode: "0644"
