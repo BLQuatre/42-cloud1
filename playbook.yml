@@ -10,7 +10,6 @@
     - docker
     - mariadb
     - wordpress
-    - phpmyadmin
     - caddy
 
   post_tasks:
@@ -27,12 +26,11 @@
       loop:
         - mariadb
         - wordpress
-        # - phpmyadmin
         - caddy
-      register: container_info
+        - phpmyadmin
+      register: docker_containers_info
 
-    - name: Debug container statuses
+    - name: Display Docker containers status
       debug:
-        msg: "Container {{ item.item }} is {{ item.container.State.Status }}"
-      loop: "{{ container_info.results }}"
-      when: item.container is defined
+        msg: "Container {{ item.container.Name }} is {{ item.container.State.Status }}"
+      loop: "{{ docker_containers_info.results }}"

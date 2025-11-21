@@ -38,6 +38,15 @@ services:
     volumes:
       - wordpress:/var/www/wordpress
     restart: always
+  phpmyadmin:
+    container_name: phpmyadmin
+    networks:
+      - cloud1
+    depends_on:
+      - mariadb
+    image: phpmyadmin:5.2.3-apache
+    env_file: .env
+    restart: always
 
 volumes:
   caddy_data:
