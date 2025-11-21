@@ -12,3 +12,6 @@ WP_ADMIN_PASSWORD: "admin_password"
 MARIADB_ROOT_PASSWORD: "root_password"
 
 CF_API_TOKEN: "your_cloudflare_api_token"
+
+PMA_HOST: "your_sql_host"
+PMA_PORT: "your_sql_port"
